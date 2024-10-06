@@ -18,8 +18,6 @@ The target game we chose is _Overcooked!_.
 
 1. Get to know the game and identify the "essence"—the core mechanism of the game, and trim it down to a minimal state.
 
-	A [game breakdown document](https://github.com/Nianyi-GSND-Projects/GSND-5110-GP2/blob/master/Game%20Breakdown/Game%20Breakdown.md) is written and uploaded here, with suggestions on how we should trim the mechanisms and my ideas on the prototype.
-
 2. Discuss and decide the best approach to prototype this game.
 
 3. Build the prototype.
