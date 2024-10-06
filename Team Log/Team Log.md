@@ -26,7 +26,8 @@ Names are ordered alphabetically by the first names.
 
 - [x] Every member should write a brief report of their thoughts about the game's "essence".
 
-	- Written & uploaded here: https://github.com/Nianyi-GSND-Projects/GSND-5110-GP2/blob/master/Game%20Breakdown/Game%20Breakdown.md
+	- Nianyi's: https://github.com/Nianyi-GSND-Projects/GSND-5110-GP2/blob/master/Game%20Breakdown/Game%20Breakdown.md
+	- Siyu's: https://docs.google.com/document/d/1HVhw4FD9ZkHqQOd8UDatE9HiE-gQQlNcpxuUuF2dJB8/
 
 - [x] Set up the Trello board and the team log.
 	- Trello board: https://trello.com/b/JhZlTzQt/group-project-2-prototyping-and-balancing
