@@ -33,7 +33,37 @@ Names are ordered alphabetically by the first names.
 	- Trello board: https://trello.com/b/JhZlTzQt/group-project-2-prototyping-and-balancing
 	- Team log: HERE
 
-## Pre-class Meeting #1 (planned)
+## Pre-class Meeting \#1 - 10/08/2024
 
 In this meeting, everyone should have already written a brief report of their ideas on the game's "essence".
 We are to discuss and decide how we are going to do this project.
+
+### Attendees
+
+Yichi was with his parents in NYC, so only other members have attended.
+Nianyi was ill.
+
+- Nianyi Wang (王念一)
+- Siyu Chai (柴思宇)
+- Zixun Yan (严子迅)
+
+### Minutes
+
+Both Zixun and Nianyi have came up with their game design.
+The team will ask for Bob's advice in the afternoon's class and decide which way to go.
+
+## In-class Meeting \#1 - 10/08/2024
+
+### Attendees
+
+Yichi is back to the campus in the noon, ALL members have attended.
+
+### Minutes
+
+Bob said Nianyi's flicking design is more "streamlined", and we should try to join with Zixun's idea together.
+We should focus on player experience instead of how similar our mechanism is to _Overcooked!_'s.
+
+### To-do
+
+- [x] Update Trello board.
+- [ ] Assign team roles.
