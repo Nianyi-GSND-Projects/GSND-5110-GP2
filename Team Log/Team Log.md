@@ -66,4 +66,27 @@ We should focus on player experience instead of how similar our mechanism is to 
 ### To-do
 
 - [x] Update Trello board.
-- [ ] Assign team roles.
+- [x] Assign team roles.
+
+## Game Lab Meeting - 10/10/2024
+
+Zixun called for a meeting in the CAMD Game Lab for deciding how the core game loop would be like.
+Also the team roles need to be decided.
+
+### Attendees
+
+The orange line is under maintainance so Siyu couldn't come (it'd take 2 hours for him to go to the campus).
+
+- Nianyi Wang (王念一)
+- Yichi Zhang (张亦驰)
+- Zixun Yan (严子迅)
+
+### Minutes
+
+The game's core loop remains basically the same as Nianyi's original idea, but with a few tweaks.
+
+Team roles:
+
+- Nianyi as the "implementor", taking charge of making the board & the digital timer required by the game.
+- Zixun as the artist.
+- Yichi & Siyu will work together to finalize the game design.
