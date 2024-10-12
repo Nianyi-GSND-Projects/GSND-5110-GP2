@@ -3,9 +3,8 @@
 	margin: 0.5in,
 	columns: 2,
 )
-#set text(size: 10pt)
 #set par(linebreaks: "optimized")
-#set list(spacing: 0em)
+#set heading(numbering: "1.1.1")
 
 #let placeholder(body, width: 100%, height: 1in) = {
 	box(width: width, height: height, stroke: (black + 0.5pt))[#{
@@ -29,6 +28,9 @@
 	[version #version]
 };
 
+A group of chefs are working in a kitchen.
+Try to finish orders as fast as possible!
+
 = Overview
 
 #columns(2)[
@@ -38,9 +40,6 @@
 	- Cooperative and fun.
 	- Involves physical interaction.
 ]
-
-You play a chef working in a kitchen.
-Try to finish as many orders as possible in limited turns with your friends!
 
 = Setup
 
@@ -64,11 +63,11 @@ Try to finish as many orders as possible in limited turns with your friends!
 	#h(1em)
 	#cph()#rarrow()#cph()
 
-+ Place all the kitchenware, ingredients boxes,and tables accessories on the map.
++ Place all ingredients in the corresponding ingredient boxes on the map.
 
 	#cph()#cph()#cph()
 
-+ Place your chef markers into the starting spots.
++ Place the chef markers into the starting spots.
 
 + Place all the ingredient tokens aside.
 
@@ -76,69 +75,100 @@ After preparation, the board should look like this:
 
 #figure(placeholder(height: 12em)[placeholder])
 
+== Areas
+
+There are 3 areas that can be seen from the setup:
+
+- Map board:
+	Supports the gameplay and displays everything.
+- Order area:
+	Where the active orders and finished orders are placed.
+- Hand:
+	The players could hold ingredients in hand.
+
 = Play
 
 The game is played in turns, cycling between the players.
 The order goes as the chef's positions on the map.
-== Game area
-The game contains three different area.
-- Main game area
-
-Main game area contains the map board and everything on it or attached to it.
-
-- Order area
-
-Order pile, active orders and finished orders are put together in order area.
-
-- Player area
-
-Each player has their own player area. Ingredients tokens will be placed here to represent it is being held by this player.
 
 == New order
 
-Every time before the first player starts their turn, draw 1 card from the order pile, put it facing up aside to represent an active order.
+Before the first player's turn starts, draw 1 card from the order pile and place it on the table facing up, which would be the first incoming order.
+There are some important information shown on the card:
+- The ingredients required for this order.
+- The waiting turn number of this order.
+- The scores the players could get for finishing this order.
+Every 6 rounds, a new order will come in.
 
-What kinds of ingredients and how they should be processed to finish an order will be drawn on the order card.
-There will also be two integer numbers on the card representing the validity period and score rewards of the order.
+Upon a turn, a player could choose one option below:
+- Move their chef marker (see @Movement).
+- Perform a workspot action (see @Workspot).
+- Do nothing and skip the turn.
 
-The validity period shows that an order would expire if not finished after certain rounds.
-The score reward show that how many scores will players gain when this order is completed.
-//Use the following table to determine after how many round would an order expire.
+Each turn is limited to 10 seconds, So the player must finish their action within the time range, or the turn will automatically be skipped.
 
-//#placeholder()[table];
+At the end of each turn, discard all expired orders.
 
-== Player's turn
+== Movement
+<Movement>
 
-In each player's turn, they could choose from one of the following options:
+A player could move their own chef marker by flicking them with fingers.
+In each turn, a player may only flick once.
 
-- Flick his own chef marker once to move on the map.
+Before flicking, if the chef is holding anything, they may drop them at place.
 
-- Spend the turn to finish a processing action(only when the player's chef marker is in any kitchenware's activation area).
+After flicking, if anything is hit during the chef marker's movement, the player could pick it up by putting _only one of them_ on the chef marker (only if the chef is not holding anything).
 
-- Do nothing.
+== Workspot
+<Workspot>
 
-Each turn has a time limit of *10* seconds. If a player doesn't make their choice before the time ends, they are considered to do nothing this turn.
+Every workspots come with their areas.
+When a player's chef marker is overlapping a workspot area, they could spend a turn to process an ingredient they're holding.
+When an ingredient is processed, it should be flipped to the processed side.
 
-At the end of each turn, all orders expires should be removed from game.
+== Serving
 
-== Flick and Hit
+When an active order's all requirements are met, players could spend the ingredients they're holding to complete it.
+The order then should be move to the completed order pile.
 
-Players move their chef markers by flicking them. 
+== Finishing
 
-When one's chef marker hit the ingredients accessories, they can choose to pick up one certain ingredient token and place it in their own player area.
+When all orders are either finished or expired, the game ends.
 
-When one's chef marker hit the table accessory, they can choose to put any of ingredient tokens from their player area to the top of table accessory, or they can also put any of ingredient tokens from top of the table accessory to their player area.
+The result of the game is determined by whether the final score has reached the level's required passing score.
+Sum all scores of the finished orders to get the final score.
 
-== Processing the ingredients
-Each kitchenware has its own activation area. When player's marker is in the area, they can choose to spend a whole turn to process an ingredient token in their player area.
+= Appendix
 
-When an ingredient token is processed, it should be fliped to the processed side to represent it.
-// Different ingredients may need to be processed by different kitchenware.
+#show table.cell.where(y: 0): set text(weight: "bold")
 
-== Finish Order and Win the Level
-Whenever ingredients in players' areas have met the need of a certain active order, players can spend ingredients on that order cards to complete that order. 
+== Term table
 
-Once an order is completed, it should be moved from active orders to a completed order pile. It is no longer avtive during the rest of game.
+#table(
+	columns: 2,
+	align: left,
+	stroke: none,
 
-When the order pile is empty, and there is no active order in the order area, the game ends. The score rewards on all orders in completed order pile will be summed. If the total sum of the scores meets the requirement of the level, players win this level. Otherwise, they fail the game.
+	table.hline(),
+	table.header([#set align(center); Term], [#set align(center); Meaning]),
+	table.hline(stroke: 0.5pt),
 
+	[Map board], [
+		A "level" of this game.
+		Features a planar structure with obstacles to block the chefs' movement.
+	],
+	[Ingredient box], [
+		A containing area on the map where the players could take ingredient from.
+	],
+	[Hand], [
+		Where a player holds the game objects they own.
+	],
+	[Chef marker], [
+		A small round disk with some weight to represent a player's avatar in the game.
+	],
+	[Workspot], [
+		An area on the map where the players can process the ingredients to the next stage.
+	],
+
+	table.hline(),
+)
