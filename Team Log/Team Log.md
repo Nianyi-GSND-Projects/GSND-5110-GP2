@@ -90,3 +90,21 @@ Team roles:
 - Nianyi as the "implementor", taking charge of making the board & the digital timer required by the game.
 - Zixun as the artist.
 - Yichi & Siyu will work together to finalize the game design.
+
+## In-class Meeting \#2 10/15/2024
+
+Bob expects us to demonstrate a minimal playable prototype to test out our ideas.
+
+### Attendees
+
+ALL
+
+### Minutes
+
+Bob pointed out that the flickering mechanic might be leading to an incorrect aesthetic.
+We need to come up with a way to fix up for it.
+
+The team members' roles are divided more clearly:
+
+- Yichi & Nianyi as the mechanics designer.
+- Siyu & Zixun as the map/level designer.
