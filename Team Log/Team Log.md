@@ -108,3 +108,19 @@ The team members' roles are divided more clearly:
 
 - Yichi & Nianyi as the mechanics designer.
 - Siyu & Zixun as the map/level designer.
+
+## Meeting at Overlook - 10/21/2024
+
+Yichi asked for a meeting with Nianyi to discuss & play-test the mechanism prototype.
+Since they all dwell close around _Warren St._, the meeting place is chosen to be Nianyi's apartment's public space Overlook at _St. Gabriel's_.
+
+### Attendees
+
+- Yichi Zhang
+- Nianyi Wang
+
+### Minutes
+
+The two discussed on how to update the mechanism design to match Bob's advice.
+Nianyi transfered all his hand-making tools and materials to Yichi.
+Yichi will try to make an updated version in Monday and play-test later.
