@@ -91,7 +91,7 @@ Team roles:
 - Zixun as the artist.
 - Yichi & Siyu will work together to finalize the game design.
 
-## In-class Meeting \#2 10/15/2024
+## In-class Meeting \#2 - 10/15/2024
 
 Bob expects us to demonstrate a minimal playable prototype to test out our ideas.
 
@@ -124,3 +124,18 @@ Since they all dwell close around _Warren St._, the meeting place is chosen to b
 The two discussed on how to update the mechanism design to match Bob's advice.
 Nianyi transfered all his hand-making tools and materials to Yichi.
 Yichi will try to make an updated version in Monday and play-test later.
+
+## In-class Meeting \#3 - 10/22/2024
+
+This is the third class for GP2.
+The previous flickering mechanism is ditched;
+Yichi has just made an updated version of the board to match the new grid-based mechanism.
+
+### Attendees
+
+ALL
+
+### Minutes
+
+It is decided that this design is all fine, we just need to finish polishing it in this week.
+Also, the final due for this GP is on Sunday, so we need to get all required deliverable materials prepared by Sunday.
