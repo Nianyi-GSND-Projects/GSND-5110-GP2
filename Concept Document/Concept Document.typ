@@ -118,7 +118,7 @@
 
 把亦驰写过的翻译、整合进来即可。
 
-= Physical Implementation
+= Implementation
 
 We simplify different food into different colors and the cooking state of food into numerical values.
 As color is an important indicator in this game, expect colorful target items like food, cookers, tables and outlet, all other elements are colorless.
@@ -181,3 +181,7 @@ Food with 2 points facing up can be cooked by cooker 2--3, and after cooking it 
 
 测试反馈结果。
 亦驰写。
+
+= Acknowledgement
+
+Special thanks to _Yichi_'s roommate and our great classmate, _Zhuowen Song_ (宋卓文)'s generous effort on playtesting the game.
