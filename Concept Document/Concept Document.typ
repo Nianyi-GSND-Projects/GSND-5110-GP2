@@ -112,8 +112,7 @@
 = MDA Analysis
 
 将上节总结成表。
-我写。
-*得等柴哥写完上一段。*
+亦驰写。
 
 = Difficulty Model
 
@@ -121,8 +120,62 @@
 
 = Physical Implementation
 
-物理实现，以及（视觉）美学设计。
-严姐写？
+We simplify different food into different colors and the cooking state of food into numerical values.
+As color is an important indicator in this game, expect colorful target items like food, cookers, tables and outlet, all other elements are colorless.
+The floor is white, the wall and obstacles are black, the edges of tiles are gray, and the two players are white.
+Moreover, only 6 basic colors are used, including red, yellow, green, orange, blue and purple, of which red, yellow and green are used to indicate food related things, including food ingredients and food storage, orange blocks in map are table, blue blocks in map are cookers, and purple block is the outlet of food delivery.
+The minimalist design of the game is simple and practical to players.
+
+== The Map
+
+As shown in the figure below, the map includes the player activity area and the surrounding equipment placement area.
+The player activity area is a $3*9$ tile map with brown tables and black obstacles (@fig:map).
+Players can put or pick food on tables, but players cannot pass through tables or black obstacles.
+Players initial place is shown in tiles of "Player1 born", "Player2 born".
+Food storages, cookers, and delivery ports are placed around the player activity area.
+There are 4 food storages, where players take 1-marked red, green, and yellow ingredients respectively.
+There are 2 cookers, one can process 1-marked food to 2-marked food, and the other can process 2-marked food to 3-marked food.
+There is also a food delivery port middle-upper to the player activity area.
+
+#figure(
+	image("images/map.png", height: 2.5in),
+	caption: [The map layout of the game.]
+) <fig:map>
+
+== Orders
+
+As shown in @fig:order, the orders includes two aspects.
+The left part shows the composition of the menu, and white numbers on the fan-shaped color blocks indicate the degree of cooking of the food.
+For example, the order below is composed of a 3-marked red, a 2-marked yellow, and a 3 marked green.
+
+The right side of the menu is the score of this menu and the time limit for order completion.
+For example, the order below needs to be completed within 3 turns, and the player can get 9 points after completion.
+
+#figure(
+	image("images/order.png", height: 1.5in),
+	caption: [The illustration of an order in game.]
+) <fig:order>
+
+== Players
+
+As shown in @fig:player, the 2 players are designed to be colorless and the marked numbers indicate Player 1 and Player 2.
+
+#figure(
+	image("images/player.png", height: 1.5in),
+	caption: [The pieces used to represent the players.]
+) <fig:player>
+
+== Food
+
+Different colored food is represented by dice of corresponding color (@fig:food).
+When food is picked up of the storage, it is placed with 1 point facing up.
+Food with 1 point facing up can be cooked by cooker 1--2, and after cooking it would be placed with 2 points facing up.
+Food with 2 points facing up can be cooked by cooker 2--3, and after cooking it would be placed with 3 points facing up.
+
+#figure(
+	image("images/food.png", height: 0.8in),
+	caption: [Dice are used to represent food at different stages.]
+) <fig:food>
 
 = Playtest and Feedback
 
