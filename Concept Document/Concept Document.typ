@@ -38,8 +38,11 @@
 			width: 50%,
 			grid(
 				columns: (1fr, 1fr),
+				row-gutter: 1em,
 				ilink("https://trello.com/invite/b/6701e44779ec640c5d328f0e/ATTI2e4e5c2ac806f734622a4564c54e84232C3A9BAB/group-project-2-prototyping-and-balancing")[Trello Board],
 				ilink("https://github.com/Nianyi-GSND-Projects/GSND-5110-GP2/blob/master/Team%20Log/Team%20Log.md")[Team Log],
+				ilink("https://www.youtube.com/watch?v=45iAqECxuNI")[Introduction Video],
+				ilink("https://www.youtube.com/watch?v=BaCN8_Ix7LQ")[Playthrough Video],
 			)
 		);
 	}
@@ -151,8 +154,80 @@ This is reflected in the goal of our game protoype, its movement rules and the i
 
 = Mechanism Design
 
-承继上节，介绍我们是如何将那些essense改编成桌游机制的。
-柴哥写。
+== Components
+
+- A board of the level map drawn on.
+- Pieces indicating the characters of each player.
+- 14 movement cards, each with an arrow printed on; blank on the back side.
+- Many colored dice, as the indicators of the ingredients.
+- Regular dice for indicating the time limit of orders.
+- A pile of order cards.
+
+== Setup
+
++ Place the game board on a flat surface.
++ Place the pieces on the starting positions on the map.
++ Each player draws 7 movement cards.
++ Shuffle the order pile and place it aside.
++ Draw 3 order cards and place them by the board.
+	These would be the first active orders.
+	Use regular dice to keep track of their time limit.
+
+== Game Loop
+
+The game goes on in a loop of a sequence of stages, until the order pile is emptied and there are no active orders.
+
++ Drafting stage:
+	Players plan their movements in this around by arranging their movement cards in arbitrary direction and order.
+	There would be 7 movements for each player in a round.
+
++ Moving stage:
+	Both players show the drafted movement sequence at the same time, and move their pieces accordingly.
+	The movement goes on by steps and synchronously.
+	That is, both players follow their first movement card in the sequence;
+	after this is done, follow the second movement, etc.
+
++ Ending stage:
+	- At the end of each turn, decrease every order time marker (the die) by 1.
+	- If any order's required ingredients are satisfied, it is considered to be finished and could be removed from the board; the players gain the scores of that order.
+	- If any order's time marker reaches 0, it is considered to be failed if it's not finished; failed orders shall be removed as well.
+	- If any order is removed, refill from the pile to make sure there are always 3 active orders.
+		- Unless the order pile is emptied.
+		- Don't forget to place time markers on new orders.
+
+== Interaction
+
+There are interactive squares on the game board.
+A player could interactive with them by moving onto them.
+If this happens, the player's piece stays in place and the interaction takes place.
+
+=== Ingredient basket
+
+There are 3 kinds of basket on the map where the players could take ingredients from.
+Interacting with them would cause the player to take an ingredient of the corresponding type, represented by a die with the same color, with 1 facing up.
+A player could only hold 1 ingredient at a time;
+if a player already holding an ingredient tries to interact with a basket, it is ignored.
+
+=== Cooker
+
+There are two possible cooking steps for every ingredients.
+Each step corresponds to a cooking spot on the map, labelled with texts of "Cooker 1--2" and "Cooker 2--3".
+After interacting with a cooker, the ingredient held by the player would change its cooked state as indicated by the cooker's name;
+also, the next movement instruction of the player's would be ignored (cooking needs the player to stay in place for 1 turn).
+
+=== Table
+
+A player could interact with a table to place/take an ingredient on/from it.
+Still, a player could carry at most one ingredient at a time.
+
+=== Outlet
+
+The outlet square serves as the serving table.
+Players must place their cooked ingredients here to finish the order.
+
+=== Collision
+
+Specially, if players ever run into each other, all subsequent movement instructions are ignored for this round.
 
 = Implementation
 
