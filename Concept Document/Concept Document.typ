@@ -47,7 +47,7 @@
 		);
 	}
 })[
-	Concept Document for _Overcooked!_ Tabletop
+	Concept Document for _Overcooked! Tabletop_
 ][
 	Group Project \#2 for GSND 5110, Group \#6
 ];
@@ -114,8 +114,12 @@
 
 = Overview
 
-先简要介绍原始游戏和改编版本的概况。
-我写。
+_Overcooked! Tabletop_ is a table-top adaptation of the popular party video game _Overcooked!_.
+The players play as chefs working in a kitchen to finish the orders coming in from the customers.
+They must cooperate well to finish their works on time.
+
+Our adapted prototype focuses on recreating and delivering the experience of cooperating with friends that comes from the original gameplay.
+To achieve this, we designed a turn-based mechanism that encourages the players to adapt a cooperative strategy on splitting the work, while keeping the intension by setting up a global time limitation for the entire level, as long as individual limitations for every orders.
 
 = Game Dissection
 
@@ -323,7 +327,7 @@ The right side of the menu is the score of this menu and the time limit for orde
 For example, the order below needs to be completed within 3 turns, and the player can get 9 points after completion.
 
 #figure(
-	image("images/order.png", height: 1.5in),
+	image("images/order.png", height: 1in),
 	caption: [The illustration of an order in game.]
 ) <fig:order>
 
@@ -332,7 +336,7 @@ For example, the order below needs to be completed within 3 turns, and the playe
 As shown in @fig:player, the 2 players are designed to be colorless and the marked numbers indicate Player 1 and Player 2.
 
 #figure(
-	image("images/player.png", height: 1.5in),
+	image("images/player.png", height: 1in),
 	caption: [The pieces used to represent the players.]
 ) <fig:player>
 
