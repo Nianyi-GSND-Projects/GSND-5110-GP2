@@ -17,7 +17,13 @@
 	show link: underline;
 	link(href, body);
 }
-#show math.equation.where(block: true): set math.equation(numbering: "1");
+#show math.equation.where(block: true): set math.equation(numbering: "1")
+#set table(stroke: none)
+#show table.cell.where(y: 0): it => {
+	set text(weight: "bold");
+	set align(center);
+	it;
+}
 
 // Title
 
@@ -256,6 +262,140 @@ $] <eq:theoretical-minimum-movement>
 When a level design is finished, the expected movement for finishing each order is then decided.
 By adjusting the amount and the type of the orders in the pile, and their score and time limitation, we could adjust the players' total available movement freely, as well as the theoretical minimum movement required by the level.
 This means that only by adjusting the order pile and the level passing score, we could control the level difficulty.
+
+== Adjusting
+
+We hope that in the first level, $Q=60%$, while in the second level $Q=78%$.
+Numerically, this meets the expectation that the second level would be 30% harder than the first level;
+but it still remains a question whether this is what the players would feel about the difficulty, which needs to be find out by further playtesting.
+
+Below are the numerical analysis of this map.
+
+=== Individually Optimal Strategy
+
+Let's assume that there is only one player who spawns below the _Outlet_ square and returns to the same square after each order is made.
+The expected movement for cooking each type of ingredient would be given as @table:individually-optimal-strategy.
+
+#figure(
+	caption: [The expected movement for cooking ingredients in the IO strategy.],
+	table(
+		columns: (auto, auto),
+		align: (center, center),
+		table.hline(),
+		table.header([Type], [Movement]),
+		table.hline(stroke: 0.5pt),
+		[Yellow2], [13],
+		[Yellow3], [17],
+		[Red2],		 [12],
+		[Red3],		 [16],
+		[Green2],	 [12],
+		[Green3],	 [16],
+		table.hline(),
+	),
+) <table:individually-optimal-strategy>
+
+Back to the two-player case, we let the expectation of the amount of collision occurrence within one cooking proccess be $K_1$.
+
+=== Longer Route Strategy
+
+In this strategy, to avoid collision, one player would take longer routes by the rim of the map, but still returns to the origin from the middle passageway after cooking.
+Then the expected movement for each ingredient would be given as @table:longer-role-strategy.
+
+#figure(
+	caption: [The expected movement for cooking ingredients in the LR strategy.],
+	table(
+		columns: (auto, auto),
+		align: (center, center),
+		table.hline(),
+		table.header([Type], [Movement]),
+		table.hline(stroke: 0.5pt),
+		[Yellow2], [16],
+		[Yellow3], [20],
+		[Red2],		 [16],
+		[Red3],		 [20],
+		[Green2],	 [18],
+		[Green3],	 [22],
+		table.hline(),
+	),
+) <table:longer-role-strategy>
+
+We also let $K_2$ be the same expectation of collision under this strategy.
+
+=== Cooperative Strategy
+
+In this strategy, one player always stays in the upper half of the board, passes ingredients to the tables, and take cooked ingredients from the table and serve them;
+the other player always stays in the lower half of the board and cook the passed ingredients.
+The expectation table would be @table:cooperative-strategy.
+
+#figure(
+	caption: [The expected movement for cooking ingredients in the cooperative strategy.],
+	table(
+		columns: (auto, auto, auto),
+		align: (center, center, center),
+		table.hline(),
+		table.header([Type], [Player 1], [Player 2]),
+		table.hline(stroke: 0.5pt),
+		[Yellow2], [8], [6],
+		[Yellow3], [8], [12],
+		[Red2],		 [8], [6],
+		[Red3],		 [8], [12],
+		[Green2],	 [8], [6],
+		[Green3],	 [8], [12],
+		table.hline(),
+	),
+) <table:cooperative-strategy>
+
+Considering the $K$ values, the overall table comparing all strategies is shown in @table:all-strategies.
+
+#figure(
+	caption: [Comparison between all strategies.],
+	table(
+		columns: (auto, auto, auto, auto),
+		align: (center, center, center, center),
+		table.hline(),
+		table.header([Type], [IO], [LR], [Cooperative]),
+		table.hline(stroke: 0.5pt),
+		[Yellow2], [$13+4K_1$], [$(16+13)slash 2+4K_2=14.5+4K_2$], [$14$],
+		[Yellow3], [$17+4K_1$], [$(20+17)slash 2+4K_2=18.5+4K_2$], [$20$],
+		[Red2],		 [$12+4K_1$], [$(16+12)slash 2+4K_2=14.0+4K_2$], [$14$],
+		[Red3],		 [$16+4K_1$], [$(16+20)slash 2+4K_2=18.0+4K_2$], [$20$],
+		[Green2],	 [$12+4K_1$], [$(12+18)slash 2+4K_2=15.0+4K_2$], [$14$],
+		[Green3],	 [$16+4K_1$], [$(22+16)slash 2+4K_2=19.0+4K_2$], [$20$],
+		table.hline(),
+	)
+) <table:all-strategies>
+
+We can see from the data that, theoretically speaking, regardless of the type of the ingredients, as long as there happens just one collision, the cooperative strategy will become the optimal approach.
+Via physical testing of the moving strategy, we found that the non-cooperative strategies would cause great waste of movement and waitings.
+They are most ineffective compared to the cooperative strategy.
+Based on this, we set the expected movement data under the cooperative strategy to be the standard expection.
+
+=== Orders
+
+We have designed the following orders as shown in @table:orders ($Q=1 slash 6$).
+
+#figure(
+	caption: [Order designs.],
+	table(
+		columns: (auto, auto, auto, auto),
+		align: (center, center, center, center),
+		table.hline(),
+		table.header([Ingredients], [Movement], [Scores], [Time limit]),
+		table.hline(stroke: 0.5pt),
+		[Yellow2 + Red2 + Green2], [42], [ 7], [3],
+		[Yellow2 + Red3 + Green3], [54], [ 9], [4],
+		[Yellow3 + Red3 + Green3], [60], [10], [5],
+		table.hline(),
+	)
+) <table:orders>
+
+Let there be 5 of each type of order in the pile, then the total number of turns would be $5 times (3+4+5) slash 3 = 20$.
+When $M=7$, the total movememnt would be $2 times 20 times 7 = 280$ steps.
+
+To match the difficulty of level 1, the expected movement should be $60% times 280 = 168$ steps.
+Given that $Q = 1 slash 6$, the required score to pass level 1 should be $168 times 1 slash 6 = 28$.
+
+If the order pile is not changed, then to match the difficulty of level 2, the required passing score should be $280 times 78% times 1 slash 6 = 36.4$, rounded down to $36$.
 
 = Implementation
 
