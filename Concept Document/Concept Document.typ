@@ -3,6 +3,7 @@
 #set page(paper: "us-letter", margin: 1in)
 #set par(justify: true)
 #show text.where(lang: "zh"): set text(font: "KaiTi")
+#set heading(numbering: "1.1.1")
 #show heading.where(level: 1): it => {
 	set align(center);
 	set text(size: 16pt);
@@ -48,7 +49,7 @@
 	Group Project \#2 for GSND 5110, Group \#6
 ];
 
-= Group Members
+#heading(level: 1, numbering: none)[Group Members]
 
 #{
 	set align(center);
@@ -101,25 +102,116 @@
 	);
 }
 
+#outline(
+	indent: auto,
+	depth: 2,
+	target: heading.where(numbering: "1.1.1"),
+)
+#pagebreak()
+
 = Overview
 
 先简要介绍原始游戏和改编版本的概况。
 我写。
 
-= Original Game Dissection
+= Game Dissection
 
 剖析原始游戏之“essense”。
 把第一周时我写的那一坨粘进来即可。
+
+== MDA Analysis
+
+There are 3 main aspects of the aesthetics that we can extract from the game, as shown in @table:mda.
+
+#figure(
+	caption: [The MDA analysis of the game.],
+	table(
+		columns: 3,
+		align: (center, left, left),
+		table.hline(),
+		table.header([Aesthetic], [Dynamic], [Mechanics]),
+		table.hline(stroke: 0.5pt),
+		[Cooperation],
+		[The players need to cooperate to get works done effectively.],
+		[By passing items via tables, throwing, streamlining; supported by the map design of levels.],
+		[Conflict],
+		[If not cooperting well, consequences would follow to drag down the effeciency significantly.],
+		[One working spot is only available for one player at a time, also the narrow passageways.],
+		[Chaos],
+		[The fast pace of the game makes it impossible for the players to sufficiently exchange their thoughts and plans. It'll also punish delayed actions, making the game chaotic.],
+		[The time limit of the level as well as the orders; over-cooked ingredient will need to be disposed and cause fire.],
+		table.hline(),
+	),
+) <table:mda>
+
+After analysis, we think that the essence of _Overcooked!_ is generated from the cooperation with friends and facing the challenges from the level.
+Although the chaotic gameplay and the conflict caused by failing cooperation is also a part of the experience, we would argue that they are not as essential as cooperation.
+We want to recreate this experience of reaching a tacit agreement with friends by planning the actions and overcome the difficult levels, and also avoid the conflicts.
+This is reflected in the goal of our game protoype, its movement rules and the interactable environmental objects.
 
 = Mechanism Design
 
 承继上节，介绍我们是如何将那些essense改编成桌游机制的。
 柴哥写。
 
-= MDA Analysis
+= Implementation
 
-将上节总结成表。
-亦驰写。
+We simplify different ingredient into different colors and the cooking state of ingredient into numerical values.
+As color is an important indicator in this game, expect colorful target items like ingredient, cookers, tables and outlet, all other elements are colorless.
+The floor is white, the wall and obstacles are black, the edges of squares are gray, and the two players are white.
+Moreover, only 6 basic colors are used, including red, yellow, green, orange, blue and purple, of which red, yellow and green are used to indicate ingredient related things, including ingredient ingredients and ingredient storage, orange blocks in map are table, blue blocks in map are cookers, and purple block is the outlet of ingredient delivery.
+The minimalist design of the game is simple and practical to players.
+
+== The Map
+
+As shown in the figure below, the map includes the player activity area and the surrounding equipment placement area.
+The player activity area is a $3 times 9$ checkboard with brown tables and black obstacles (@fig:map).
+Players can put or pick ingredient on tables, but players cannot pass through tables or black obstacles.
+Players initial place is shown in squares of Player1 born", "Player2 born".
+Food storages, cookers, and delivery ports are placed around the player activity area.
+There are 4 ingredient storages, where players take level 1 red, green, and yellow ingredients respectively.
+There are 2 cookers, one can process level 1 ingredient to level 2 ingredient, and the other can process level 2 ingredient to level 3 ingredient.
+There is also a ingredient delivery port middle-upper to the player activity area.
+
+#figure(
+	image("images/map.png", height: 2.5in),
+	caption: [The map layout of the game.]
+) <fig:map>
+
+== Orders
+
+As shown in @fig:order, the orders includes two aspects.
+The left part shows the composition of the menu, and white numbers on the fan-shaped color blocks indicate the degree of cooking of the ingredient.
+For example, the order below is composed of a level 3 red, a level 2 yellow, and a 3 marked green.
+
+The right side of the menu is the score of this menu and the time limit for order completion.
+For example, the order below needs to be completed within 3 turns, and the player can get 9 points after completion.
+
+#figure(
+	image("images/order.png", height: 1.5in),
+	caption: [The illustration of an order in game.]
+) <fig:order>
+
+== Players
+
+As shown in @fig:player, the 2 players are designed to be colorless and the marked numbers indicate Player 1 and Player 2.
+
+#figure(
+	image("images/player.png", height: 1.5in),
+	caption: [The pieces used to represent the players.]
+) <fig:player>
+
+== Ingredient
+
+Ingredients of different types are represented by dice of corresponding color (@fig:ingredient).
+When an ingredient is picked up of the storage, it is placed with 1 point facing up.
+Ingredients with 1 point facing up can be cooked by cooker 1--2, and after cooking it would be placed with 2 points facing up.
+Ingredients with 2 points facing up can be cooked by cooker 2--3, and after cooking it would be placed with 3 points facing up.
+
+#figure(
+	image("images/ingredient.png", height: 0.8in),
+	caption: [Dice are used to represent ingredient at different stages.]
+) <fig:ingredient>
 
 = Difficulty Model
 
@@ -138,11 +230,6 @@ In this prototype, there are these key parameters:
 
 For each ingredient component of an order, there is theoretically a minimal movement to complete cooking it.
 From this, we could estimate the minimal required movement for each order, and use that as the foundation for the numerical design of the orders.
-
-#figure(
-	image("images/map.png", height: 2.5in),
-	caption: [The map layout of the game.]
-) <fig:map>
 
 Take the map in @fig:map as an example.
 Suppose that a player starts in front of _Outlet_, to fetch the _yellow_ ingredient and cook it to level 3, the necessary movement could be:
@@ -396,60 +483,6 @@ To match the difficulty of level 1, the expected movement should be $60% times 2
 Given that $Q = 1 slash 6$, the required score to pass level 1 should be $168 times 1 slash 6 = 28$.
 
 If the order pile is not changed, then to match the difficulty of level 2, the required passing score should be $280 times 78% times 1 slash 6 = 36.4$, rounded down to $36$.
-
-= Implementation
-
-We simplify different food into different colors and the cooking state of food into numerical values.
-As color is an important indicator in this game, expect colorful target items like food, cookers, tables and outlet, all other elements are colorless.
-The floor is white, the wall and obstacles are black, the edges of squares are gray, and the two players are white.
-Moreover, only 6 basic colors are used, including red, yellow, green, orange, blue and purple, of which red, yellow and green are used to indicate food related things, including food ingredients and food storage, orange blocks in map are table, blue blocks in map are cookers, and purple block is the outlet of food delivery.
-The minimalist design of the game is simple and practical to players.
-
-== The Map
-
-As shown in the figure below, the map includes the player activity area and the surrounding equipment placement area.
-The player activity area is a $3 times 9$ checkboard with brown tables and black obstacles (@fig:map).
-Players can put or pick food on tables, but players cannot pass through tables or black obstacles.
-Players initial place is shown in squares of Player1 born", "Player2 born".
-Food storages, cookers, and delivery ports are placed around the player activity area.
-There are 4 food storages, where players take level 1 red, green, and yellow ingredients respectively.
-There are 2 cookers, one can process level 1 food to level 2 food, and the other can process level 2 food to level 3 food.
-There is also a food delivery port middle-upper to the player activity area.
-
-== Orders
-
-As shown in @fig:order, the orders includes two aspects.
-The left part shows the composition of the menu, and white numbers on the fan-shaped color blocks indicate the degree of cooking of the food.
-For example, the order below is composed of a level 3 red, a level 2 yellow, and a 3 marked green.
-
-The right side of the menu is the score of this menu and the time limit for order completion.
-For example, the order below needs to be completed within 3 turns, and the player can get 9 points after completion.
-
-#figure(
-	image("images/order.png", height: 1.5in),
-	caption: [The illustration of an order in game.]
-) <fig:order>
-
-== Players
-
-As shown in @fig:player, the 2 players are designed to be colorless and the marked numbers indicate Player 1 and Player 2.
-
-#figure(
-	image("images/player.png", height: 1.5in),
-	caption: [The pieces used to represent the players.]
-) <fig:player>
-
-== Food
-
-Different colored food is represented by dice of corresponding color (@fig:food).
-When food is picked up of the storage, it is placed with 1 point facing up.
-Food with 1 point facing up can be cooked by cooker 1--2, and after cooking it would be placed with 2 points facing up.
-Food with 2 points facing up can be cooked by cooker 2--3, and after cooking it would be placed with 3 points facing up.
-
-#figure(
-	image("images/food.png", height: 0.8in),
-	caption: [Dice are used to represent food at different stages.]
-) <fig:food>
 
 = Playtest and Feedback
 
