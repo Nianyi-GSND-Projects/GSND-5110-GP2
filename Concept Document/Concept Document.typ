@@ -42,7 +42,7 @@
 				ilink("https://trello.com/invite/b/6701e44779ec640c5d328f0e/ATTI2e4e5c2ac806f734622a4564c54e84232C3A9BAB/group-project-2-prototyping-and-balancing")[Trello Board],
 				ilink("https://github.com/Nianyi-GSND-Projects/GSND-5110-GP2/blob/master/Team%20Log/Team%20Log.md")[Team Log],
 				ilink("https://www.youtube.com/watch?v=45iAqECxuNI")[Introduction Video],
-				ilink("https://www.youtube.com/watch?v=BaCN8_Ix7LQ")[Playthrough Video],
+				ilink("https://www.youtube.com/watch?v=nxQ1l2dCgHg")[Playthrough Video],
 			)
 		);
 	}
@@ -119,8 +119,68 @@
 
 = Game Dissection
 
-剖析原始游戏之“essense”。
-把第一周时我写的那一坨粘进来即可。
+== Quick Facts
+
+- Genre: Multiplayer cooperative party game.
+- Camera: Adopts a pseudo top-down view.
+- Map: Grid-based, but the players could move freely.
+- Goal: To cook and serve as many orders as possible within limited time.
+
+== A Closer Look
+
+The game resembles the kitchen of a restaurant, in which the players would play as chefs to finish the orders keep coming in.
+
+#figure(
+	caption: [Level 1-1 of _Overcooked!_.],
+	image("images/level-1-1-labeled.jpg", height: 20em)
+) <fig:level-1-1>
+
+@fig:level-1-1 shows the first level of _Overcooked!_, with the steps that the players need to do labelled in sequence:
+
++ Take the onions out from the basket.
++ Take them to the cutting board and cut them.
++ Put the cut onion into the pot.
++ Set the pot on stove and wait for it to be cooked.
++ Pour the soup into the plate before the pot's burnt.
++ Take the plate to the serving table.
++ Collect the dirty dishes from the recycling window to the sink.
++ Wash them in the sink and put them back on empty desks.
++ If anything goes wrong, there's a bin to dispose unwanted items or burnt soup.
+
+It's easy to see that if players really follow through all the steps, they would be taking unnecessarily long routes all the time.
+So, instead of each chef does all the steps individually, an obviously more reasonable strategy is to split the work up by each chef taking the works on one side of the kitchen (divided by the line of desks in the middle horizontally), so that neither one needs to walk long distances anymore.
+
+A possible working plan would be like:
+Chef A is in charge of taking the ingredients, putting cut ingredients in pots, getting them cooked and passing cooked soups to over the desks;
+while chef B is in charge of cutting ingredients passed by chef A, passing them back, taking the cooked soup to the dishes, returning the pot, serving the dishes and cleaning the returned dirty dishes.
+
+Naturally, players would form up a cooperative strategy instead of working on their own business independently.
+There are couple of factors of the game that causes this.
+Most of them are challenges to the players.
+
+=== Temporal
+
+Temporal challenge is the most founding element for the game play.
+Without this, the whole game mechanism doesn't stand anymore, as the player could just walk around and do everything at an easy pace.
+
+From outside, there are limitations for the entire level and each order, pushing the players to find the fastest way to finish the orders.
+From inside, each step in the cooking procedure would cost fixed amount of time, as long as the necessary walkings.
+
+=== Spatial
+
+Spatial challenge isn't only reflected on the map, but also fixed-amount resources, like desk space, usable clean disks, pots, chopping boards, etc.
+The players must plan the usage of these resources wisely or otherwise they'd quickly be short on them, dragging down the entire cooking procedure.
+This could be fatal because each cooking step are linked with one another, and the clock is still running when the procedure is stuck.
+
+Also, the route planning thing mentioned earlier.
+The level designer intentionally designed the map to be inconvenient for one chef to take care of the entire procedure, so it's necessary for multiple chefs to split the work.
+There could be other spatial tricks like a narrow passageway where only one chef could pass at a time; or conveyer belts which would move objects around.
+
+=== Strategical
+
+There's a strategy often used in real gameplay: batching.
+Instead of doing orders one by one, it could save some time if the same steps are batched together.
+It also saves some mental stress because the chef in charge of using the pots doesn't have to take care of them as frequently as if each pot is used individually---they work in sync now.
 
 == MDA Analysis
 
@@ -559,10 +619,91 @@ Given that $Q = 1 slash 6$, the required score to pass level 1 should be $168 ti
 
 If the order pile is not changed, then to match the difficulty of level 2, the required passing score should be $280 times 78% times 1 slash 6 = 36.4$, rounded down to $36$.
 
+#show heading.where(level: 2): set heading(numbering: none);
+#show heading.where(level: 3): set heading(numbering: none);
+
 = Playtest and Feedback
 
-测试反馈结果。
-亦驰写。
+We went through multiple rounds of testing and feedback to adjust our mechanics and balancing.
+In the initial version, many mechanics and content were quite different from the final version:
+
++ In the initial version, the spawn points of the two players were placed in the center of the map, and the players would be moved back to the spawn point after a crash.
++ Each player's hand used to consist of 4 movement cards and 1 interact card.
+	To interact with a special grid, you need to use an interact card, and movement cannot cause interaction.
++ Processing food did not consume just one extra movement, but consumed all remaining movements in this turn.
++ The initial map size is smaller than the final map.
++ The order must be completed when the ingredients are submitted, rather than when the timers become zero.
+
+#heading(level: 2, numbering: none)[Playtest 1.1---Developer Testing]
+
+=== Feedback
+
+Almost as soon as the game started, we found that when players were spawn at the center of the game, they would have a huge chance of getting into serious conflicts right from the beginning.
+
+=== Solution
+
+We immediately changed the players' spawn points to the two ends of the map to avoid continuous conflicts at the beginning of the game that would make the game unplayable (@fig:playtest-map).
+
+#figure(
+	caption: [The updated version of the map after playtesting.],
+	image("images/playtest-map.png", height: 12em),
+) <fig:playtest-map>
+
+#heading(level: 2, numbering: none)[Playtest 1.2---Developer Testing]
+
+=== Feedback
+
+We played a few times. Since we had a good understanding of how the game works, we decided to restrict ourselves to no communication when playing with two people. This restriction caused our movements to conflict a few times, causing our pieces to return to their spawn points. We realized that this penalty was too severe for players, not only wasting actions in the current turn, but also disrupting all planning that players had done before.
+
+=== Solution
+
+We decided to change the rules so that when a conflict occurs, players will stay in their positions before the conflict and end their turn. Players can keep their progress in executing their plans and think about how to avoid future conflicts in the same place.
+
+=== Result
+
+After two revisions, our game became playable, and there were no more frustrations and difficulties in testing that went against the designers' intentions.
+
+#heading(level: 2, numbering: none)[Playtest 2---Developer Testing]
+
+=== Feedback
+
+After we completed the initial order design, we tried to set a target score according to our mathematical model and played several games. We found that the game seemed to be more difficult than expected and did not provide the expected error tolerance for players. The game usually ended two to three rounds earlier than we expected, which resulted in a higher difficulty than we estimated.
+
+=== Solution
+
+After analysis, we found that according to the original order completion rules, some orders were completed when there was still a lot of time left, causing new orders to fill the gap immediately. In general, the early completion of orders caused the order deck to be consumed faster, and also led to a reduction in the number of game rounds, which is difficult to calculate and estimate. We decided to change the order completion rules so that active orders are checked for completion when the countdown reaches 0. After this change, the number of game rounds became in line with our expectations, and the game rounds were only slightly extended when there were one or two orders left at the end, which was what we expected.
+
+=== Results
+
+We found an oversight in our mathematical model. Since it is difficult to estimate the total number of game rounds while taking into account the problem of completing orders, we chose to change the game rules to match our mathematical model without affecting the aesthetic and dynamics of the game.
+
+#heading(level: 2, numbering: none)[Playtest 3---Player Testing]
+
+=== Feedback
+
+The feedback from our player testing focused on the pace of the game. Players generally felt that the number of rounds in the game was limited, and that only a limited amount of things could be done in each round. Players particularly disliked using specific interact cards to interact with special grids, as this greatly limited what they could do in each round. Players also disliked that processing ingredients would skip an entire round, which led to a lot of time wasted and time bottlenecks in the processing stage when working together.
+
+=== Solution
+
+After careful consideration, we cancelled the design of interact cards and made all interactions triggered by movement. We increased the number of movements per round (4>7) to expand the player's decision-making space and action capabilities. We also changed the extra time consumed on processing ingredients from the entire current turn to the next movement of the current turn. Players can still avoid this effect through clever planning, but now players can do more things after processing and plan their actions more freely.
+
+=== Results
+
+We optimized the game mechanics based on player experience, and redesigned the order decks and target scores based on our mathematical model.
+
+#heading(level: 2, numbering: none)[Playtest 4]
+
+=== Feedback
+
+We found a minor issue where players tended to move from the outer channel rather than the middle channel when picking up and processing yellow ingredients. When we asked them why, they replied that the distance from the left yellow ingredient to the processing table below was the same from both sides, and that taking the middle channel was more likely to cause conflict. In our concept design, the middle channel should be a high-risk-high-reward option, while the outer channel should be a low-risk-low-reward option, providing players with two meaningful choices. This reflects the mismatch between our concept design and the actual map design.
+
+=== Solution
+
+After thinking about it, we finally decided to widen the map horizontally by two squares, making the outer channel slightly longer than the middle channel. Not only from a numerical point of view, but also from an intuitive point of view, the middle channel is more attractive than before, which also fits our map design concept. Then, based on the new map, we designed a new order deck and score target according to the mathematical model.
+
+=== Result
+
+We corrected the mistakes in map design, and judging from the results of mathematical models and playtest, the current balance of the game is satisfactory.
 
 = Acknowledgement
 
