@@ -253,8 +253,9 @@ The game goes on in a loop of a sequence of stages, until the order pile is empt
 
 + Ending stage:
 	- At the end of each turn, decrease every order time marker (the die) by 1.
-	- If any order's required ingredients are satisfied, it is considered to be finished and could be removed from the board; the players gain the scores of that order.
-	- If any order's time marker reaches 0, it is considered to be failed if it's not finished; failed orders shall be removed as well.
+	- If any order's time marker reaches 0, it shall be removed from the board.
+		- If all requirements of the ingredients are met on removal, the players get the scores of the order.
+		- Otherwise, it is considered as failed and players get nothing.
 	- If any order is removed, refill from the pile to make sure there are always 3 active orders.
 		- Unless the order pile is emptied.
 		- Don't forget to place time markers on new orders.
